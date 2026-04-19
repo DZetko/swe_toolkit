@@ -1,6 +1,9 @@
+author: Daniel Zikmund, zikmund.d@gmail.com
+version: 1.0.0
+
 # Frontend Architecture Rules
 
-Reusable rules for any React frontend built on **Feature Sliced Design**. These are *non-negotiable* unless explicitly overridden in a project's own spec.
+Reusable rules for any React frontend built on **Feature Sliced Design**. These are _non-negotiable_ unless explicitly overridden in a project's own spec.
 
 ## 1. Stack baseline
 
@@ -60,6 +63,7 @@ Every slice (`entities/pipeline`, `features/pipelines/run-pipeline`, etc.) has t
 ## 4. What belongs in which layer
 
 ### `shared/`
+
 - UI kit (shadcn components, design system primitives)
 - API transport (`apiClient`, error types, query client config)
 - Config (env, routes, query keys)
@@ -68,6 +72,7 @@ Every slice (`entities/pipeline`, `features/pipelines/run-pipeline`, etc.) has t
 - **No domain concepts here.** If it mentions a business noun, it's not shared.
 
 ### `entities/`
+
 - Domain nouns as UI + state: `entities/dataset`, `entities/pipeline`
 - Read queries (`useXxxQuery`, `useXxxByIdQuery`)
 - Display components (`PipelineRow`, `StatusBadge`)
@@ -75,22 +80,26 @@ Every slice (`entities/pipeline`, `features/pipelines/run-pipeline`, etc.) has t
 - **No mutations.** Mutations are user actions → features.
 
 ### `features/`
+
 - Single user interaction: `features/pipelines/run-pipeline`
 - Contains the trigger (button/form), the mutation hook, and any dialog/form
 - Named by action: verbs, not nouns (`create-dataset`, not `dataset-creator`)
 - A feature is deletable — removing it must not break anything outside the feature itself
 
 ### `widgets/`
+
 - Composite blocks reused across pages (`PipelineTable`, `DashboardSummaryCards`)
 - Wire entities + features together into a self-contained block
 - Own the loading / empty / error states for the data they render
 
 ### `pages/`
+
 - One folder per route. Thin composition only.
 - Page reads URL params, composes widgets + features, nothing more
 - No business logic, no direct API calls
 
 ### `app/`
+
 - Providers: `QueryClientProvider`, `AuthProvider`, `ThemeProvider`, `RouterProvider`
 - Global styles entry point
 - Single `main.tsx` entry point
@@ -144,7 +153,7 @@ Every query-backed UI renders three distinct views. This is a **hard requirement
 ## 11. Documentation (JSDoc)
 
 - Every exported function, hook, and component has a JSDoc block with a one-sentence summary and `@param` / `@returns` where applicable.
-- Document the *why*, not the *what*. A component's JSDoc explains when to use it, not what's inside.
+- Document the _why_, not the _what_. A component's JSDoc explains when to use it, not what's inside.
 - Complex types exported from a slice carry JSDoc describing each field.
 - Internal helpers document only the non-obvious — skip when the name says everything.
 

@@ -1,3 +1,6 @@
+author: Daniel Zikmund, zikmund.d@gmail.com
+version: 1.0.0
+
 # Backend Architecture Rules
 
 Reusable rules for any ASP.NET backend built on **Domain Driven Design + Clean Architecture**. These are _non-negotiable_ unless explicitly overridden in a project's own spec.
@@ -38,7 +41,7 @@ Infrastructure  →  Application  →  Domain
 - Domain events inherit from a common `IDomainEvent` marker. Aggregates raise them via a protected `Raise(...)` and expose `DomainEvents` read-only.
 - Domain services only when the logic doesn't naturally belong to a single aggregate.
 - Repository interfaces live in Domain (`IXxxRepository`). They accept/return domain objects only — never persistence-layer types.
-- Exceptions from Domain are domain exceptions (`PipelineNotActiveException`), not generic `InvalidOperationException`. They inherit from a shared `DomainException` base.
+- Domain operations use the Result pattern to notify the caller if the operation succeeded. The result can be void (not generic) param, a primitive or a simple record
 - No `DateTime.Now`, no `Guid.NewGuid()`, no `Random` inside Domain — take these as dependencies via interfaces (`IClock`, `IIdGenerator`).
 
 ## 5. Application layer rules
